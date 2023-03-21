@@ -11,6 +11,7 @@ const CreatePost = ({ setCurrentPage }) => {
     const createPostMutation = useMutation({
         mutationFn: createPost,
         onSuccess: (data) => {
+            queryClient.setQueryData(['posts', data.id], data) // adding data to cache load it instantly 
             queryClient.invalidateQueries(['posts'], { exact: true })
             setCurrentPage(<Post id={data.id} />)
         }
