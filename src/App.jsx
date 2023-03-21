@@ -11,18 +11,16 @@ function App() {
   const queryCLient = useQueryClient()
   const postQuery = useQuery({
     queryKey: ['posts'],
-    queryFn: () => wait(1000).then(() => [...POSTS])
+    queryFn: (obj) => wait(1000).then(() => {
+      console.log(obj)
+      return [...POSTS]
+    })
   })
 
-  const newPost = useMutation({
-    mutationFn: title => {
-      return wait(1000).then(() =>
-        POSTS.push({ id: crypto.randomUUID(), title }))
-    },
-    onSuccess: () => {
-      queryCLient.invalidateQueries(['posts'])
-    }
-  })
+  // posts --> ["posts"]
+  // posts/1 --> ["posts", post.id]
+  // posts?authorId=1 --> ["posts", {authorId: 1}]
+  // posts/2/comments --> ["posts", post.id, "comments"] 
 
   if (postQuery.isLoading) return <h1>Loading...</h1>
   if (postQuery.isError) return <pre>{JSON.stringify(postQuery.error)}</pre>
@@ -33,8 +31,9 @@ function App() {
         <div key={post.id}> {post.title} </div>
       ))}
       <button
-        disabled={newPost.isLoading}
-        onClick={() => newPost.mutate('New Post')}>
+      // disabled={newPost.isLoading}
+      // onClick={() => newPost.mutate('New Post')}
+      >
         Add new
       </button>
     </div>)
