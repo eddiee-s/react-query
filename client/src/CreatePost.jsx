@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import React, { useRef } from 'react'
 import { createPost } from './api/posts'
 import Post from './Post'
@@ -6,10 +6,12 @@ import Post from './Post'
 const CreatePost = ({ setCurrentPage }) => {
     const titleRef = useRef()
     const bodyRef = useRef()
+    const queryClient = useQueryClient()
 
     const createPostMutation = useMutation({
         mutationFn: createPost,
         onSuccess: (data) => {
+            queryClient.invalidateQueries(['posts'], { exact: true })
             setCurrentPage(<Post id={data.id} />)
         }
     })
