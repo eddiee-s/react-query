@@ -1,5 +1,6 @@
 import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react";
+import Post from "./Post";
 import PostList1 from "./PostList1";
 import PostList2 from "./PostList2";
 
@@ -14,6 +15,9 @@ function App() {
       </button>
       <button onClick={() => setCurrentPage(<PostList2 />)}>
         Posts List 2
+      </button>
+      <button onClick={() => setCurrentPage(<Post id={1} />)}>
+        Post 1
       </button>
       <br />
       {currentPage}
