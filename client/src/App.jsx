@@ -1,9 +1,9 @@
-import { QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react";
 import CreatePost from "./CreatePost";
 import Post from "./Post";
 import PostList1 from "./PostList1";
 import PostList2 from "./PostList2";
+import PostListPaginated from "./PostListPaginated";
 
 
 function App() {
@@ -21,7 +21,10 @@ function App() {
         Post 1
       </button>
       <button onClick={() => setCurrentPage(<CreatePost setCurrentPage={setCurrentPage} />)}>
-        Create Post
+        New Post
+      </button>
+      <button onClick={() => setCurrentPage(<PostListPaginated />)}>
+        Post Paginated
       </button>
       <br />
       {currentPage}
