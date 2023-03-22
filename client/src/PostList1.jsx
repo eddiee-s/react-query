@@ -5,6 +5,8 @@ const PostList1 = () => {
     const postQuery = useQuery({
         queryKey: ['posts'],
         queryFn: getPosts,
+        initialData: [{ id: 1, title: 'initialData' }],
+        // placeholderData: [{ id: 1, title: 'initialData' }]
         // staleTime: 1000, //staleInterval for current query 
         // refetchInterval: 1000, //refetch query interval
     })
