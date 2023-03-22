@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useQueries, useQuery } from "@tanstack/react-query"
 import { getPosts } from "./api/posts"
 
 const PostList1 = () => {
@@ -13,6 +13,18 @@ const PostList1 = () => {
      * postQuery.status --> state: loading, error, paused, success... on page load
      * postQuery.fetchStatus --> state: fetching, idle ...when successfuly fetched but changing the page with same fetch results or when something changes
     */
+
+    //? useQueries for fetching data based on another query
+    const queries = useQueries({
+        queries: (postQuery?.data ?? []).map(post => {
+            return {
+                queryKey: ['post', post.id],
+                queryFn: getPosts(post.id),
+            }
+        })
+    })
+
+    console.log(queries.map(q => q.data))
 
     if (postQuery.status === 'loading') return <h1>Loading...</h1>
     if (postQuery.status === 'error') {
