@@ -1,4 +1,6 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { getPost } from "./api/posts";
 import CreatePost from "./CreatePost";
 import Post from "./Post";
 import PostList1 from "./PostList1";
@@ -10,6 +12,15 @@ import PostListPaginated from "./PostListPaginated";
 function App() {
   const [currentPage, setCurrentPage] = useState(<PostList1 />);
 
+  const queryClient = useQueryClient()
+
+  const onHoverPostOneLink = () => {
+    queryClient.prefetchQuery({
+      queryKey: ['posts', 1],
+      queryFn: () => getPost(1)
+    })
+  }
+
   return (
     <div>
       <button onClick={() => setCurrentPage(<PostList1 />)}>
@@ -18,8 +29,8 @@ function App() {
       <button onClick={() => setCurrentPage(<PostList2 />)}>
         Posts List 2
       </button>
-      <button onClick={() => setCurrentPage(<Post id={1} />)}>
-        Post 1
+      <button onMouseEnter={onHoverPostOneLink} onClick={() => setCurrentPage(<Post id={1} />)}>
+        First Post
       </button>
       <button onClick={() => setCurrentPage(<CreatePost setCurrentPage={setCurrentPage} />)}>
         New Post
