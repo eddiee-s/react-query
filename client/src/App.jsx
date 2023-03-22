@@ -3,6 +3,7 @@ import CreatePost from "./CreatePost";
 import Post from "./Post";
 import PostList1 from "./PostList1";
 import PostList2 from "./PostList2";
+import PostListInfinite from "./PostListInfinite";
 import PostListPaginated from "./PostListPaginated";
 
 
@@ -24,7 +25,10 @@ function App() {
         New Post
       </button>
       <button onClick={() => setCurrentPage(<PostListPaginated />)}>
-        Post Paginated
+        Post List Paginated
+      </button>
+      <button onClick={() => setCurrentPage(<PostListInfinite />)}>
+        Post List Infinite
       </button>
       <br />
       {currentPage}
